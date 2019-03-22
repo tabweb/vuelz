@@ -1,0 +1,30 @@
+# protected/runtime/cache/
+# qrcode/*
+# uploads
+# !uploads/
+# protected/runtime/*
+# assets/*
+# local.md
+# .settings
+# .settings/*
+# .idea
+# .idea/*
+# *.idea
+# .idea/
+# df/
+# /yii-framework/bgii/assets/*
+# AOP_SDK_WORK_DIR
+
+
+.idea/
+# */.idea/
+# *.idea/
+*.otf
+# #*.md
+# *.xml
+# *.iml
+*.map
+# *.less
+# *.scss
+# *.DS_Store
+

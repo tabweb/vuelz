@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?php echo $activity['title']; ?></title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta equiv="Expires" content="0">
+    <meta id="eqMobileViewport" name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0 ,maximum-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"> -->
+    <?php include_once ROOT_PATH.'/public_tpl/common_header.php'; ?><!-- 分享链接 -->
+    <?php include_once ROOT_PATH.'/public_tpl/common_viewport.php';?>
+
+    <script type="text/javascript" src="//res1.i-lz.cn/static/common/vconsole.min.js"></script>
+    <script> var vConsole = new VConsole();</script>
+
+    <script>
+        // (function () {
+        //     var a = parseInt(window.screen.width) / 640,
+        //         a = /Android (\d+\.\d+)/.test(navigator.userAgent) ? 2.3 >= parseFloat(RegExp.$1) ? "width=640, target-densitydpi=device-dpi" : "width=640, minimum-scale = " + a + ", maximum-scale = " + a + ", target-densitydpi=device-dpi" : "width=640, user-scalable=no, target-densitydpi=device-dpi",
+        //         b = document.createElement("meta");
+        //     b.name = "viewport";
+        //     b.content = a;
+        //     document.getElementsByTagName("head")[0].appendChild(b)
+        // })();
+
+        (function () {
+            function setViewport(w) {
+                var scale = parseInt(window.screen.width) / w,
+                    a = /Android (\d+\.\d+)/.test(navigator.userAgent) ? 2.3 >= parseFloat(RegExp.$1) ? "width=" + w + ", target-densitydpi=device-dpi" : "width=" + w + ", minimum-scale = " + scale + ", maximum-scale = " + scale + ", target-densitydpi=device-dpi" : "width=" + w + ", user-scalable=no, target-densitydpi=device-dpi";
+                document.getElementById('eqMobileViewport').setAttribute("content", a);
+            }
+
+            function resize() {
+                setTimeout(function () {
+                    setViewport(639);
+                }, 50);
+                setTimeout(function () {
+                    setViewport(640);
+                }, 100)
+            }
+
+            setViewport(640);
+            window.onorientationchange = resize;
+        })();
+
+
+        var sysParam = {
+            /*
+            wxId: '<?php echo $this->userinfo['openid'];?>', //!*用户微信的openid
+            baseUrl: '<?php echo $this->SURL(true); ?>/',    //!*插件的基本资源路径
+            version: '<?php echo '?ver=' . $activity['aid'] . '_' . $activity['cache_key']?>', //版本
+            musicUrl: '<?php echo $settings['musicUrl']?>',  //音频路径
+            activity_desc: '<?php echo $settings['activity_desc']?>',   //规则
+            gameUrl: '<?php echo Yii::app()->request->getHostInfo() . AU('game/index');?>', //项目链接
+            userImg: '<?php echo $wxInfo['userImg']?>',   //用户头像
+            userName: '<?php echo $wxInfo['nickname']?>', //用户昵称
+
+            customWxCss: '<?php echo $settings['customWxCss']?>',   //自定义CSS
+            statJs: '<?php echo $settings['statJs']?>',   //第三方统计代码说
+            isSubscribe: '<?php echo $isSubscribe;?>',//!*用户是否已关注,0没有，1已关注
+            subscribeUrl: '<?php echo $settings['subscribeUrl']?>',//关注链接url
+            endParticipation: '<?php echo $settings['endParticipation']?>',//活动停止参与时间
+
+            //分享信息
+            shareInfo: '<?php echo json_encode($shareInfo);?>', // 分享者数据
+            shareImg: '<?php echo $shareInfo['userImg']; ?>',   //分享头像
+            shareName:'<?php echo $shareInfo['nickname']; ?>',  //分享名字
+            shareId: "<?php echo $shareId;?>",                  //分享openid
+            shareTitle: "<?php echo $settings['shareTitle']?>", //分享标题
+            shareDesc: "<?php echo str_replace(array('\r\n', '\r', '\n'), '', $settings['shareDesc'])?>",//分享描述
+            shareIcon: '<?php echo $settings['shareIcon']?>',   //分享图标
+            isSharePage: "<?php echo $isSharePage?>",	        //是否分享页    1 是	0不是
+            shareUrl: '<?php echo Yii::app()->request->getHostInfo() . AU('game/index') . '?_fromwx=' .$shareId;?>',/// 分享链接
+            qrCode:"http://www.i-lz.cn/qrApi?text=<?php echo urlencode(Yii::app()->request->getHostInfo() . AU('game/index') . '?_fromwx=' .$shareId); ?>", //二维码地址
+
+            // 页面数据
+            memberCode: '<?php echo $userInfo['memberCode'];?>', // 用户id
+            addr:'<?php echo $otherinfo;?>',//已选地址
+            // linkHref: '<?php echo $settings['linkHref']?>', // 外部链接
+            linkHref: "https://www.baidu.com/", // 外部链接
+            maolehui: '<?php echo $settings['jumpUrl1'];?>',     //茂乐惠商城链接
+            diAudio: '<?php echo $this->SURL('/audio/ding.mp3');?>',
+            liAudio: '<?php echo $this->SURL('/audio/li.wav');?>',
+            discontinue:<?php echo $this->discontinue;?>,//0未1已结束
+            isUserinfo:'<?php echo $checkinfo;?>',//0未登记，1已登记
+            shareOpenid: '<?php echo $shareOpenid;?>',//分享用户信息
+            achievement: "<?php echo $achievement;?>",//化解图案数量
+            videoUrl:'<?php echo $settings['videoURL'];?>',//视频链接
+            addrList:<?php echo json_encode($addrList);?>,//地址排名
+
+            //关注信息
+            isNeedSubscribe: '<?php echo $settings['isNeedSubscribe']?>', //关注状态（0不关注，1强制关注，2引导关注）
+            subscribe_desc: '<?php echo $settings['subscribe_desc']?>',   //关注文案
+
+            // ajax 请求接口
+            indexUrl: '<?php echo AU('game/index');?>', //首页链接
+            ajaxCheckPrizeURL: '<?php echo AU('game/checkPrize');?>',  //核销奖品接口
+            ajaxShareURL: '<?php echo AU('game/share');?>',            //分享接口
+            ajaxUpCustomerURL: '<?php echo AU('game/upCustomer');?>',  //提交用户信息
+            ajaxMyPrizeURL: '<?php echo AU('game/myPrize');?>',        //我的奖品
+            ajaxDoingGameURL: '<?php echo AU('game/doingGame');?>',    //提交接口
+            ajaxRankingListURL: '<?php echo AU('game/rankingList');?>',//排行榜
+
+
+                .png"
+                .png') ?>"
+                <img src="
+                <img src="<?php echo $this->SURL('/
+                src="images
+                src="<?php echo $this->SURL('/images
+            */
+        };
+
+        /*
+                var curDomain = document.domain;
+                if(sysParam.userImg.indexOf("//thirdwx.qlogo.cn/")!=-1){
+                    sysParam.userImg=sysParam.userImg.replace("//thirdwx.qlogo.cn","//"+curDomain)
+                }else if(sysParam.userImg.indexOf("//wx.qlogo.cn/")!=-1){
+                    sysParam.userImg=sysParam.userImg.replace("//wx.qlogo.cn","//"+curDomain)
+                }
+        */
+
+    </script>
+    <script>
+        var h = window.innerHeight;
+        var res = [
+            {
+                "id": "hook-line",
+                "left": 245,  //297
+                "top": -(548 - 180 / 1008 * h),  // -294
+                "height": 548,
+                "width": 254,
+                "src": "images/gameView/hook-box/hook-line.png"
+            }, {
+                "id": "hook-left",
+                "left": 0,
+                "top": 443,
+                "height": 105,
+                "width": 77,
+                "src": "images/gameView/hook-box/hook-left.png"
+            }, {
+                "id": "hook-right",
+                "left": 74,
+                "top": 441,
+                "height": 99,
+                "width": 81,
+                "src": "images/gameView/hook-box/hook-right.png"
+            }, {
+                "id": "star2",
+                "left": 362,
+                "top": -68,
+                "height": 171,
+                "width": 278,
+                "src": "images/gameView/star2.png"
+            }, {
+                "id": "star1",
+                "left": 41,
+                "top": 57 / 1008 * h,
+                "height": 143,
+                "width": 143,
+                "src": "images/gameView/star1.png"
+            }, {
+                "id": "btn-left",
+                "left": 5,
+                "top": 76,
+                "height": 75,
+                "width": 48,
+                "src": "images/gameView/btn-box/btn-left.png",
+                "MOUSE_DOWN": function (e) {
+                    game.gameBtnLeft({
+                        mouse: 'down'
+                    });
+                },
+                "MOUSE_UP": function (e) {
+                    game.gameBtnLeft({
+                        mouse: 'up'
+                    });
+                },
+                "MOUSE_OUT": function (e) {
+                    game.gameBtnLeft({
+                        mouse: 'up'
+                    });
+                }
+            }, {
+                "id": "btn-down",
+                "left": 75,
+                "top": 174,
+                "height": 48,
+                "width": 75,
+                "src": "images/gameView/btn-box/btn-down.png",
+                "MOUSE_DOWN": function (e) {
+                    game.gameBtnDown({
+                        mouse: 'down'
+                    });
+                }
+            }, {
+                "id": "btn-right",
+                "left": 171,
+                "top": 76,
+                "height": 75,
+                "width": 48,
+                "src": "images/gameView/btn-box/btn-right.png",
+                "MOUSE_DOWN": function (e) {
+                    game.gameBtnRight({
+                        mouse: 'down'
+                    });
+                },
+                "MOUSE_UP": function (e) {
+                    game.gameBtnRight({
+                        mouse: 'up'
+                    });
+                },
+                "MOUSE_OUT": function (e) {
+                    game.gameBtnRight({
+                        mouse: 'up'
+                    });
+                }
+            }, {
+                "id": "btn-up",
+                "left": 75,
+                "top": 6,
+                "height": 48,
+                "width": 75,
+                "src": "images/gameView/btn-box/btn-up.png",
+                "MOUSE_DOWN": function (e) {
+                    game.gameBtnUp({
+                        mouse: 'down'
+                    });
+                },
+            }, {
+                "id": "btn-back",
+                "left": 78,
+                "top": 709 / 1008 * h,
+                "height": 231,
+                "width": 231,
+                "src": "images/gameView/btn-box/btn-back.png"
+            }, {
+                "id": "btn-start",
+                "left": 366,
+                "top": 718 / 1008 * h,
+                "height": 218,
+                "width": 218,
+                "src": "images/gameView/btn-start.png",
+                "CLICK": function (e) {
+                    game.gameBtnStart();
+                }
+            }, {
+                "id": "doll1",
+                "left": 76,
+                "top": 2,
+                "height": 179,
+                "width": 141,
+                "src": "images/gameView/stage-box/doll1.png"
+            }, {
+                "id": "doll2",
+                "left": 247,
+                "top": 0,
+                "height": 183,
+                "width": 140,
+                "src": "images/gameView/stage-box/doll2.png"
+            }, {
+                "id": "doll3",
+                "left": 423,
+                "top": 4,
+                "height": 190,
+                "width": 139,
+                "src": "images/gameView/stage-box/doll3.png"
+            }, {
+                "id": "doll4",
+                "left": 59,
+                "top": 210,
+                "height": 170,
+                "width": 131,
+                "src": "images/gameView/stage-box/doll4.png"
+            }, {
+                "id": "doll5",
+                "left": 240,
+                "top": 207,
+                "height": 173,
+                "width": 127,
+                "src": "images/gameView/stage-box/doll5.png"
+            }, {
+                "id": "doll6",
+                "left": 419,
+                "top": 196,
+                "height": 167,
+                "width": 135,
+                "src": "images/gameView/stage-box/doll6.png"
+            }, {
+                "id": "stage",
+                "left": 13,
+                "top": 294 / 1008 * h,
+                "height": 502,
+                "width": 612,
+                "src": "images/gameView/stage-box/stage.png"
+            }, {
+                "id": "bg-back",
+                "left": 0,
+                "top": 0,
+                "height": h,
+                "width": 640,
+                "src": "images/gameView/bg-back.png"
+            }
+        ];
+
+        var sound = {
+            jump: "https://res1.i-lz.cn/addonsStatics/jumpJump/themes/defualt/audio/jump.mp3?ver=15430_20",
+        }
+    </script>
+
+
+    <!--
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->SURL('/css/common.css') ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->SURL('/css/animate.css') ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->SURL('/css/animation.css') ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->SURL('/css/index.css') ?>">
+        -->
+    <link rel="stylesheet" type="text/css" href="//res1.i-lz.cn/plugin/swiper-4.3.5.min.css">
+    <link rel="stylesheet" type="text/css" href="js/swiper-4.3.3.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/animation.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        * {
+
+            /*-webkit-text-size-adjust: none;*/
+            /*-webkit-appearance: none;*/
+            /*-webkit-tap-highlight-color: transparent*/
+        }
+    </style>
+</head>
+<body>
+<section id="app">
+    <!--加载-->
+    <transition name="fade">
+        <!--
+        <?php $this->widget('application.widgets.AddonLoadingAnime', array(
+        'activity'=>$this->activity,
+        'logo'=>empty($settings['loadingImg']) ? $this->DSURL('/images/logo.png') : $settings['loadingImg'],
+        'text'=>'',
+        'background'=>'#000',
+        'addClass'=>'',
+        'id'=>'',
+        'ext'=> 'v-show="loading"'
+        ));?>
+        -->
+        <section class="loading" id="loading" v-show="loading">
+            <div class="loadingBox">
+                <!--<p><img class="" src="<?php echo $this->SURL('/images/logo.png') ?>"></p>-->
+                <p><img class="" src="images/logo.png"></p>
+                <span class="l-1">i</span>
+                <span class="l-2">-</span>
+                <span class="l-3">l</span>
+                <span class="l-4">z</span>
+                <span class="l-5">.</span>
+                <span class="l-6">c</span>
+                <span class="l-7">n</span>
+                <div class="loadingLine">
+                    <div class="load-progress" id="load-progress"></div>
+                </div>
+                <div class="load-prg-text" id="load-prg-text"></div>
+            </div>
+        </section>
+    </transition>
+    <section v-cloak class="body">
+        <!-- swiper-container -->
+        <section v-show="page.home && false" class="home">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">slider1</div>
+                    <div class="swiper-slide">slider2</div>
+                    <div class="swiper-slide">slider3</div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+        <transition-group name="fade">
+            <!-- 图片上传 -->
+            <section key="fade" v-show="page.home && false" class="home">
+                <div class="canvasBoxWrap">
+                    <div class="canvasBox">
+                        <canvas id="canvas" class="ce " width="351px" height="443px"></canvas>
+                        <canvas id="pic" class="ce dis_none"></canvas>
+                    </div>
+                </div>
+                <label for="cameraInput" class="cameraInput">上传</label>
+                <input id="cameraInput" class="dis_none" accept="image/*" name="cameraInput" type="file">
+                <!-- 屏幕滑动 -->
+                <div class="touchBox" @touchstart="slideStart" @touchmove="slideMove"
+                     @touchend.prevent="slideEnd({cb:function(){ pageShow('home') }})"></div>
+            </section>
+            <!-- video before -->
+            <section key="fade" v-show="page.beforeVideo" class="beforeVideo">
+                <img class="pa bg-back"
+                     src="https://res1.i-lz.cn/addonsStatics/lzinvitation/themes/gongcha/images/getHomeBg.png?v=322">
+                <img class="ce videoPlay"
+                     src="https://res1.i-lz.cn/addonsStatics/lzinvitation/themes/gongcha/images/getHome.png?ver=14941_1"
+                     alt="">
+            </section>
+            <section key="fade" v-show="page.videoPage" class="videoPage">
+                <video id="video" webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow"
+                       x5-video-player-type="h5" x5-video-player-fullscreen="true" x5-video-orientation="portraint"
+                       style="object-fit:fill">
+                    <source src="http://addons-10007457.video.myqcloud.com/msdt.mp4.f30.mp4"/>
+                </video>
+                <em class="jump">跳过</em>
+            </section>
+            <!-- 文本复制 -->
+            <section key="fade" v-show="page.home && false" class="home">
+                <div class="font-size50 clipboard-btn" data-clipboard-text="132456">
+                    ClipboardJS _ 文本复制
+                </div>
+            </section>
+            <!-- layabox game gameView.js 游戏页 -->
+            <section key="fade" v-show="page.home ">
+                <div class="gameView"></div>
+            </section>
+            <!-- 首页 -->
+            <section key="fade" v-show="page.home && false" class="home">
+                <img src="images/home/h-back.png" class="h-back"/>
+                <div class="h-man-box">
+                    <img src="images/home/h-man-box/h-desk.png" class="h-desk"/>
+                    <img src="images/home/h-man-box/h-people.png" class="h-people"/>
+                    <img src="images/home/h-man-box/h-trophy.png" class="h-trophy"/>
+                    <img src="images/home/h-man-box/h-man-boxBg.png" class="h-man-boxBg"/>
+                </div>
+                <img src="images/home/h-man2.png" class="h-man2"/>
+                <img src="images/home/h-theme.png" class="h-theme"/>
+                <img src="images/home/h-logo.png" class="h-logo"/>
+                <img src="images/home/h-btnStart.png" class="h-btnStart"/>
+                <img src="images/home/h-btnRule.png" class="h-btnRule"/>
+                <img src="images/home/h-btnRank.png" class="h-btnRank"/>
+                <img src="images/home/h-btnPrize.png" class="h-btnPrize"/>
+            </section>
+            <!-- page1 -->
+            <section key="fade" v-show="page.page1" class="page1">
+                <img src="images/page1/p1-poster1.png" class="p1-poster1"/>
+                <img src="images/page1/p1-user-head.png" class="p1-user-head"/>
+                <img src="images/page1/p1-user-name.png" class="p1-user-name"/>
+                <img src="images/page1/p1-logo.png" class="p1-logo"/>
+                <img src="images/page1/p1-btnMakingPoster.png" class="p1-btnMakingPoster"/>
+                <img src="images/page1/p1-tipShare.png" class="p1-tipShare"/>
+            </section>
+            <!-- page2 -->
+            <section key="fade" v-show="page.page2" class="page2">
+                <img src="images/page2/p2-poster1.png" class="p2-poster1"/>
+                <img src="images/page2/p2-user-head.png" class="p2-user-head"/>
+                <img src="images/page2/p2-user-name.png" class="p2-user-name"/>
+                <img src="images/page2/p2-logo.png" class="p2-logo"/>
+                <img src="images/page2/p2-btnHelp.png" class="p2-btnHelp"/>
+                <img src="images/page2/p2-btnJoin.png" class="p2-btnJoin"/>
+                <div class="p2-friendInfo">
+                    <img src="images/page2/p2-friendInfo/p2-friendInfo-back.png" class="p2-friendInfo-back"/>
+                    <img src="images/page2/p2-friendInfo/p2-rank-txt1.png" class="p2-rank-txt1"/>
+                    <img src="images/page2/p2-friendInfo/p2-rank-txt2.png" class="p2-rank-txt2"/>
+                    <img src="images/page2/p2-friendInfo/p2-friendInfoBg.png" class="p2-friendInfoBg"/>
+                </div>
+            </section>
+            <!--弹窗黑层-->
+            <section class="popupBg" key="fade" v-show="popupBg"></section>
+        </transition-group>
+        <!-- 一级弹窗  -->
+        <transition-group name="pop" class="pop" v-show="popupBg">
+            <!-- 报名信息 -->
+            <div key="pop" v-show="pop.pop1" class="pop1">
+                <img src="images/pop/pop1/pop1-back.png" class="pop1-back"/>
+                <img src="images/pop/pop1/pop1-btn-submit.png" class="pop1-btn-submit"/>
+                <img @click="close()" src="images/pop/pop1/pop1-btn-close.png" class="pop1-btn-close"/>
+            </div>
+            <!-- 活动规则 -->
+            <div key="pop" v-show="pop.pop2" class="pop2">
+                <div class="pop2-box">
+                    <img src="images/pop/pop2/pop2-box/pop2-poster1.png" class="pop2-poster1"/>
+                    <img src="images/pop/pop2/pop2-box/pop2-user-head.png" class="pop2-user-head"/>
+                    <img src="images/pop/pop2/pop2-box/pop2-user-name.png" class="pop2-user-name"/>
+                    <img src="images/pop/pop2/pop2-box/pop2-logo.png" class="pop2-logo"/>
+                    <img src="images/pop/pop2/pop2-box/QR-code.png" class="QR-code"/>
+                    <img src="images/pop/pop2/pop2-box/pop2-boxBg.png" class="pop2-boxBg"/>
+                </div>
+                <img src="images/pop/pop2/pop2-tipSave.png" class="pop2-tipSave"/>
+                <img src="images/pop/pop2/pop2-btn-close.png" class="pop2-btn-close"/>
+                <img src="images/pop/pop2/pop2Bg.png" class="pop2Bg"/>
+            </div>
+            <!-- 我的物品 有 -->
+            <div key="pop" v-show="pop.pop3" class="pop3">
+                <img src="images/pop/pop3/pop3-back.png" class="pop3-back"/>
+                <img src="images/pop/pop3/pop3-btn-close.png" class="pop3-btn-close"/>
+                <img src="images/pop/pop3/pop3-ruleTxt.png" class="pop3-ruleTxt"/>
+                <img src="images/pop/pop3/pop3Bg.png" class="pop3Bg"/>
+            </div>
+            <!-- 我的物品 无 -->
+            <div key="pop" v-show="pop.pop4" class="pop4">
+                <img src="images/pop/pop4/pop4-back.png" class="pop4-back"/>
+                <div class="pop4-list-box">
+                    <div class="pop4-list">
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-list-back.png" class="pop4-list-back"/>
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-like.png" class="pop4-like"/>
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-score.png" class="pop4-score"/>
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-head.png" class="pop4-head"/>
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-name.png" class="pop4-name"/>
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-num1.png" class="pop4-num1"/>
+                        <img src="images/pop/pop4/pop4-list-box/pop4-list/pop4-listBg.png" class="pop4-listBg"/>
+                    </div>
+                    <img src="images/pop/pop4/pop4-list-box/pop4-list-boxBg.png" class="pop4-list-boxBg"/>
+                </div>
+                <div class="pop4-my-box">
+                    <img src="images/pop/pop4/pop4-my-box/pop4-my-boxBg.png" class="pop4-my-boxBg"/>
+                </div>
+                <img src="images/pop/pop4/pop4-btn-close.png" class="pop4-btn-close"/>
+                <img src="images/pop/pop4/pop4Bg.png" class="pop4Bg"/>
+            </div>
+            <!-- 奖品礼盒 -->
+            <div key="pop" v-show="pop.pop5" class="pop5">
+                <img src="images/pop/pop5/pop5-back.png" class="pop5-back"/>
+                <img src="images/pop/pop5/pop5-txt1.png" class="pop5-txt1"/>
+                <img src="images/pop/pop5/pop5-noPrize.png" class="pop5-noPrize"/>
+                <img src="images/pop/pop5/pop5-btn-close.png" class="pop5-btn-close"/>
+                <img src="images/pop/pop5/pop5Bg.png" class="pop5Bg"/>
+            </div>
+            <!-- 精美奖品 -->
+            <div key="pop" v-show="pop.pop6" class="pop6">
+                <img src="images/pop/pop6/pop6-back.png" class="pop6-back"/>
+                <img src="images/pop/pop6/pop6-prizeImg.png" class="pop6-prizeImg"/>
+                <img src="images/pop/pop6/btnReceive1.png" class="btnReceive1"/>
+                <img src="images/pop/pop6/pop6-btn-close.png" class="pop6-btn-close"/>
+                <img src="images/pop/pop6/pop6Bg.png" class="pop6Bg"/>
+            </div>
+            <!-- 精美奖品 -->
+            <div key="pop" v-show="pop.pop7" class="pop7">
+                <img src="images/pop/pop7/pop7-back.png" class="pop7-back"/>
+                <img src="images/pop/pop7/pop7-btn-close.png" class="pop7-btn-close"/>
+                <img src="images/pop/pop7/pop7-btnSubmit.png" class="pop7-btnSubmit"/>
+                <img src="images/pop/pop7/pop7Bg.png" class="pop7Bg"/>
+            </div>
+            <!-- 精美奖品 -->
+            <div key="pop" v-show="pop.pop8" class="pop8">
+                <img src="images/pop/pop8/pop8-back.png" class="pop8-back"/>
+                <img src="images/pop/pop8/pop8-btn-submit.png" class="pop8-btn-submit"/>
+                <img src="images/pop/pop8/pop8-txt1.png" class="pop8-txt1"/>
+                <img src="images/pop/pop8/pop8Bg.png" class="pop8Bg"/>
+            </div>
+            <!-- 精美奖品 -->
+            <div key="pop" v-show="pop.pop9" class="pop9">
+                <img src="images/pop/pop9/pop9-back.png" class="pop9-back"/>
+                <img src="images/pop/pop9/pop9-btnIKnow.png" class="pop9-btnIKnow"/>
+                <img src="images/pop/pop9/pop9-btnIPlay.png" class="pop9-btnIPlay"/>
+                <img src="images/pop/pop9/pop9-txt1.png" class="pop9-txt1"/>
+                <img src="images/pop/pop9/pop9Bg.png" class="pop9Bg"/>
+            </div>
+        </transition-group>
+
+        <!-- 2级 弹窗黑层 ------------------------------------------------------------>
+        <transition-group name="fade">
+            <section class="popupBg" key="fade" v-show="popupBgTwo"></section>
+        </transition-group>
+        <transition-group name="pop" class="pop" v-show="popupBgTwo">
+            <!-- 输入兑换码 -->
+            <div key="pop" v-show="popTwo.pop6" class="pop6">
+
+            </div>
+        </transition-group>
+
+        <!-- 分享 -->
+        <div @click="popTwoClose()" key="fade" v-show="popTwo.share" class="ce sharebox">
+            <img src="images/share.png" class="share"/>
+        </div>
+
+        <!--信息弹窗-->
+        <div class="ce alert" v-show="popAlert.show">
+            <div class="content" id="alert"></div>
+            <div class="closeBtn" @click="closeAlert"></div>
+        </div>
+        <!-- 3级 弹窗黑层 ------------------------------------------------------------>
+        <transition-group name="fade">
+            <section class="popupBg z-index99" key="fade" v-show="popupBgThree"></section>
+        </transition-group>
+        <transition-group name="pop" class="pop" v-show="popupBgThree">
+            <!-- 关注 -->
+            <!--
+            <div key="pop" v-show="popThree.pop5" class="pop5 z-index99">
+                <img src="<?php echo $this->SURL('/images/pop/pop5/pop5-back.png')?>" class="pop5-back"/>
+                <img src="<?php echo $this->SURL('/images/pop/pop5/pop5-txt1.png')?>" class="pop5-txt1"/>
+                <img src="<?php echo $this->SURL('/images/pop/pop5/pop5-QRcode.png')?>" class="pop5-QRcode"/>
+                <img @click="popThreeClose()" src="<?php echo $this->SURL('/images/pop/pop5/pop5-submit.png')?>" class="pop5-submit"/>
+            </div>
+            -->
+        </transition-group>
+        <!-- ajax 加载动画 -->
+        <transition-group name="fade">
+            <div key="fade" class="fadeAlert" v-show="fAlert.show">
+                {{fAlert.text}}
+            </div>
+            <section key="fade" class="load" id="load" v-show="ajaxLoading">
+                <div id="loading-center">
+                    <div id="loading-center-absolute">
+                        <div class="object" id="object_one"></div>
+                        <div class="object" id="object_two" style="left:20px;"></div>
+                        <div class="object" id="object_three" style="left:40px;"></div>
+                        <div class="object" id="object_four" style="left:60px;"></div>
+                        <div class="object" id="object_five" style="left:80px;"></div>
+                    </div>
+                </div>
+            </section>
+        </transition-group>
+    </section>
+</section>
+</body>
+
+<!--
+<script src="<?php echo $this->SURL('/js/html2canvas.min.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/lz.min.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/easeljs.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/exif.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/data.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/txt.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/common.js') ?>"></script>
+<script src="<?php echo $this->SURL('/js/index.js') ?>"></script>
+-->
+<!--<script src="//res1.i-lz.cn/plugin/layaAir/laya.core.min.js"></script>-->
+<!--<script src="//res1.i-lz.cn/plugin/layaAir/laya.webgl.min.js"></script>-->
+<!--<script src="//res1.i-lz.cn/plugin/html2canvas.min.js"></script>-->
+<!--<script src="//res1.i-lz.cn/plugin/swiper-4.3.5.min.js"></script>-->
+
+<!--<script src="//res1.i-lz.cn/plugin/howler.min.js"></script>-->
+<!--<script src="https://res1.i-lz.cn/static/common/js/x.js"></script>-->
+
+<!--<script src="//res1.i-lz.cn/plugin/vue.min.js"></script>-->
+<!--<script src="//res1.i-lz.cn/plugin/zepto.min.js"></script>-->
+<!--<script src="//res1.i-lz.cn/plugin/iscroll.js"></script>-->
+
+<!--<script src="js/easeljs.js"></script>-->
+<!--<script src="js/exif.js"></script>-->
+<script src="js/swiper-4.3.3.min.js"></script>
+<script src="js/clipboard.min.js"></script>
+<script src="js/lz.min.js"></script>
+<!--<script src="js/min/laya.core.min.js"></script>-->
+<!--<script src="js/min/laya.webgl.min.js"></script>-->
+<script src="//res1.i-lz.cn/plugin/layaAir/laya.core.min.js"></script>
+<script src="//res1.i-lz.cn/plugin/layaAir/laya.webgl.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/txt.js"></script>
+<script src="js/common.js"></script>
+<script src="js/gameView.js"></script>
+<script src="js/index.js"></script>
+
+<!--
+<script type="text/javascript">
+    var title = "<?php echo $settings['shareTitle'];?>",    //分享标题
+        desc = "<?php echo $settings['shareDesc']?>",		//分享描述
+        img = "<?php echo $settings['shareIcon'] ?>",		//分享图标
+        link = '<?php echo Yii::app()->request->getHostInfo() . AU('game/index') . '?_fromwx=' .$shareId;?>';				//分享链接
+    function init_wxjs() {
+        WX_STAT.init({
+            hideToolbar: true,
+            hideOptionMenu: false,
+            networkType: "",
+            title: '{title}',
+            title_vars: {'{title}': 'title'},
+            desc: '{desc}',
+            desc_vars: {'{desc}': 'desc'},
+            img: '{img}',
+            img_vars: {'{img}': 'img'},
+            link: '{link}',
+            link_vars: {'{link}': 'link'}
+        }, { // 分享取消
+            cancel: function (resp) {
+                //alert(resp);
+            },
+            // 分享失败
+            fail: function (resp) {
+                //alert(resp);
+            },
+            // 分享成功
+            ok: function (resp) {
+
+            }
+        }, {
+            aid: "<?php echo $activity['aid'];?>",
+            wxid: "<?php echo $wxInfo['openid'];?>",
+            fromType: "<?php echo $this->fromType;?>",
+            fromWxid: "<?php echo $this->fromwx;?>",
+            attent: sysParam.isSubscribe
+        });
+    };
+    init_wxjs();
+    // https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
+    function wxaddCard(obj) {
+        wx.addCard({
+            cardList: [{
+                cardId: obj.cardId,
+                cardExt: obj.cardExt,
+            }], // 需要添加的卡券列表
+            success: function (res) {
+                var cardList = res.cardList; // 添加的卡券列表信息
+            }
+        });
+    }
+</script>
+-->
+<script>
+
+</script>
+</html>
+
