@@ -64,7 +64,7 @@ var app = new Vue({
                 // app.pageShow('page1');
                 // app.popShow('pop2');
                 // app.popTwoShow('pop1');
-                app.ClipboardJS();
+                // app.ClipboardJS();
                 // pageInit();
             }
 
