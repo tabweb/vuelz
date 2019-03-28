@@ -34,9 +34,7 @@ button,input[type=button],input[type=reset],input[type=submit] {-webkit-appearan
 img{border:none;white-space:normal;vertical-align: text-bottom;}
 del,.del{opacity: 0;visibility: hidden;}
 img{ pointer-events: none;}
-img[class*="btn"]{
-    pointer-events: all;
-}
+img[class*="btn"]{pointer-events: all;}
 // common
 .event-none {pointer-events: none;}
 .event-auto {pointer-events: auto;}
