@@ -29,7 +29,7 @@ section {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  min-height: 1008px; }
+  min-height: 800px; }
 
 canvas {
   touch-action-delay: none;
@@ -102,6 +102,12 @@ img {
 del, .del {
   opacity: 0;
   visibility: hidden; }
+
+img {
+  pointer-events: none; }
+
+img[class*="btn"] {
+  pointer-events: all; }
 
 .event-none {
   pointer-events: none; }
@@ -358,6 +364,9 @@ del, .del {
 
 .text-line {
   text-decoration: line-through; }
+
+.text-underline {
+  text-decoration: underline; }
 
 .share {
   position: absolute;

@@ -34,9 +34,7 @@ button,input[type=button],input[type=reset],input[type=submit] {-webkit-appearan
 img{border:none;white-space:normal;vertical-align: text-bottom;}
 del,.del{opacity: 0;visibility: hidden;}
 img{ pointer-events: none;}
-img[class*="btn"]{
-    pointer-events: all;
-}
+img[class*="btn"]{pointer-events: all;}
 // common
 .event-none {pointer-events: none;}
 .event-auto {pointer-events: auto;}
@@ -135,6 +133,7 @@ img[class*="btn"]{
 .over-scroll-touch{overflow-scrolling: touch;-webkit-overflow-scrolling: touch;}
 .font-bold{font-weight: bold;}
 .text-line{text-decoration: line-through;}
+.text-underline{text-decoration: underline;}
 // single page ******************************************
 .share {position: absolute;top: 58px;right: 83px;}
 .text {width: 374px;text-align: center;font-size: 24px;color: #4c352f;}
