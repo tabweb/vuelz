@@ -13,6 +13,7 @@ var appData = {
             page: {
                 beforeVideo: false,
                 videoPage: false,
+                gameView:false,
                 home: false,
                 page1: false,
                 page2: false,

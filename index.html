@@ -248,6 +248,10 @@
                 "src": "images/gameView/btn-start.png",
                 "CLICK": function (e) {
                     game.gameBtnStart();
+                    console.log(123);
+                    setTimeout(() => {
+                        app.pageShow("home");
+                    }, 1500);
                 }
             }, {
                 "id": "doll1",
@@ -424,12 +428,12 @@
                 </div>
             </section>
             <!-- layabox game gameView.js 游戏页 -->
-            <section key="fade" v-show="page.home ">
+            <section key="fade" v-show="page.gameView">
                 <div class="gameView"></div>
             </section>
             <!-- 首页 -->
-            <section key="fade" v-show="page.home && false" class="home">
-                <img src="images/home/h-back.png" class="h-back"/>
+            <section key="fade" v-show="page.home" class="home">
+                <img src="images/home/h-back.png" class="h-back bg"/>
                 <div class="h-man-box">
                     <img src="images/home/h-man-box/h-desk.png" class="h-desk"/>
                     <img src="images/home/h-man-box/h-people.png" class="h-people"/>
@@ -439,10 +443,10 @@
                 <img src="images/home/h-man2.png" class="h-man2"/>
                 <img src="images/home/h-theme.png" class="h-theme"/>
                 <img src="images/home/h-logo.png" class="h-logo"/>
-                <img src="images/home/h-btnStart.png" class="h-btnStart"/>
+                <img @click="pageShow('gameView')" src="images/home/h-btnStart.png" class="h-btnStart"/>
                 <img src="images/home/h-btnRule.png" class="h-btnRule"/>
-                <img src="images/home/h-btnRank.png" class="h-btnRank"/>
-                <img src="images/home/h-btnPrize.png" class="h-btnPrize"/>
+                <img @click="popShow('pop2')" src="images/home/h-btnRank.png" class="h-btnRank"/>
+                <img @click="pageShow('page1')" src="images/home/h-btnPrize.png" class="h-btnPrize"/>
             </section>
             <!-- page1 -->
             <section key="fade" v-show="page.page1" class="page1">
@@ -490,8 +494,8 @@
                     <img src="images/pop/pop2/pop2-box/pop2-boxBg.png" class="pop2-boxBg"/>
                 </div>
                 <img src="images/pop/pop2/pop2-tipSave.png" class="pop2-tipSave"/>
-                <img src="images/pop/pop2/pop2-btn-close.png" class="pop2-btn-close"/>
-                <img src="images/pop/pop2/pop2Bg.png" class="pop2Bg"/>
+                <img @click="close()" src="images/pop/pop2/pop2-btn-close.png" class="pop2-btn-close"/>
+                <img v-show="false" src="images/pop/pop2/pop2Bg.png" class="pop2Bg"/>
             </div>
             <!-- 我的物品 有 -->
             <div key="pop" v-show="pop.pop3" class="pop3">
