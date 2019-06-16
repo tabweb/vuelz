@@ -1143,3 +1143,64 @@ g.prototype.init = function () {
 
 
 
+
+$(function () {
+    function resize(rotate) {
+        var scale;
+        if (rotate == 90) {
+            scale = window.innerWidth / 640;
+        } else {
+            scale = window.innerHeight / 640;
+        }
+        $(".body-resize").css({
+            "transform": "translate3d(-50%,-50%,0) scale(" + scale + ") rotate(" + rotate + "deg)",
+            "-webkit-transform": "translate3d(-50%,-50%,0) scale(" + scale + ")  rotate(" + rotate + "deg)"
+        }).attr("data-id", rotate)
+    }
+
+    window.addEventListener('orientationchange', updateOrientation, false);
+    window.addEventListener('resize', updateOrientation, false);
+    function updateOrientation() {
+        var orientation = window.orientation;
+        switch (orientation) {
+            case 90:
+                resize(0);
+                setTimeout(function () {
+                    resize(0);
+                    setTimeout(function () {
+                        resize(0);
+
+                    }, 300);
+                }, 300);
+                break;
+            case -90:
+                resize(0);
+                setTimeout(function () {
+                    resize(0);
+                    setTimeout(function () {
+                        resize(0);
+
+                    }, 300);
+                }, 300);
+                break;
+            case 0:
+                resize(90);
+                setTimeout(function () {
+                    resize(90);
+                    setTimeout(function () {
+                        resize(90);
+
+                    }, 300);
+                }, 300);
+                break;
+        }
+    }
+    updateOrientation();
+    setTimeout(function () {
+        updateOrientation();
+        setTimeout(function () {
+            updateOrientation();
+        }, 300);
+    }, 300);
+});
+

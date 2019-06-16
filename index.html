@@ -472,6 +472,14 @@
                     <img src="images/page2/p2-friendInfo/p2-friendInfoBg.png" class="p2-friendInfoBg"/>
                 </div>
             </section>
+            <!-- page3  屏幕旋转 orientationchange -->
+            <section key="fade" v-show="page.page3" class="page3">
+                <div class="body-resize" style="background-color: white">
+                    <div class="bg-back">
+                        <p class="font-size35">横屏 横屏 横屏 width:1334 height:640</p>
+                    </div>
+                </div>
+            </section>
             <!--弹窗黑层-->
             <section class="popupBg" key="fade" v-show="popupBg"></section>
         </transition-group>

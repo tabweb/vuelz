@@ -211,6 +211,15 @@ img[class*="btn"] {
   margin: 0 auto;
   position: relative; }
 
+.body-resize {
+  width: 1334px;
+  height: 640px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%); }
+
 .pos-f {
   position: fixed; }
 
