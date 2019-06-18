@@ -1169,7 +1169,6 @@ $(function () {
                     resize(0);
                     setTimeout(function () {
                         resize(0);
-
                     }, 300);
                 }, 300);
                 break;
@@ -1179,7 +1178,6 @@ $(function () {
                     resize(0);
                     setTimeout(function () {
                         resize(0);
-
                     }, 300);
                 }, 300);
                 break;
@@ -1189,7 +1187,6 @@ $(function () {
                     resize(90);
                     setTimeout(function () {
                         resize(90);
-
                     }, 300);
                 }, 300);
                 break;
