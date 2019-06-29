@@ -4,10 +4,10 @@
 var app = new Vue({
     mixins: [appData, txtData],
     el: '#app',
-    data:{
-        timeTotal:3,
+    data: {
+        timeTotal: 3,
 
-        ajaxGetTemplate_data:{
+        ajaxGetTemplate_data: {
             "data": [{
                 "id": "1",
                 "aid": "16463",
@@ -18,15 +18,15 @@ var app = new Vue({
                 "ctime": "1529220334"
             }]
         },
-        ajaxGetTemplate_single:{}
+        ajaxGetTemplate_single: {}
     },
     methods: {
-        gameTime:function(){
+        gameTime: function () {
             app.countdown({
-                time:app.timeTotal,
-                cb:function(time){
-                    app.timeTotal --;
-                    if(time <= 0){
+                time: app.timeTotal,
+                cb: function (time) {
+                    app.timeTotal--;
+                    if (time <= 0) {
                         console.log('结束');
                     }
                 }
@@ -34,7 +34,7 @@ var app = new Vue({
         },
 
         // 确定
-        btnconfirm:function() {
+        btnconfirm: function () {
             app.ajaxGetTemplate({
                 callback: function () {
                     app.pageShow('page3');
@@ -56,15 +56,26 @@ var app = new Vue({
                 }
             })
         },
+        // ajax test url
+        ajaxTemp: function (obj) {
+            let url = 'https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/2017-02-26/2017-06-10';
+            ajax({
+                type: 'get',
+                url: url,
+                callBack: function (data) {
+                    console.log('url1', data);
+                }
+            })
+        }
     },
     created: function () {
         this.$nextTick(function () {
-            function indexInit(){
+            function indexInit() {
                 app.pageShow('home');
                 // app.pageShow('page1');
                 // app.popShow('pop2');
                 // app.popTwoShow('pop1');
-                 app.ClipboardJS();
+                app.ClipboardJS();
                 // pageInit();
 
             }
@@ -84,7 +95,7 @@ var app = new Vue({
                     return;
                 }
 
-                $("input").on("blur",function () {
+                $("input").on("blur", function () {
                     tr_appResize()
                 })
             }
@@ -98,7 +109,7 @@ var app = new Vue({
 
             window.onload = function () {
                 init({
-                    cb:function () {
+                    cb: function () {
                         indexInit();
                         dataInit();
                     }
