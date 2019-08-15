@@ -1,0 +1,12 @@
+// https://www.cnblogs.com/ToBeBest/p/10196484.html
+
+// 输入框部分宽度 从10px到600px 相隔10像素
+.generate-widths(600);
+
+.generate-widths(@n, @i: 10) when (@i =< @n) {
+    .width@{i} {
+        width: 0px + @i;
+    }
+
+    .generate-widths(@n, (@i+10));
+}
