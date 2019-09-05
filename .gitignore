@@ -79,9 +79,6 @@ AOP_SDK_WORK_DIR
 */.idea/
 *.idea/
 *.otf
-*.md
 *.xml
 *.map
-*.less
-*.scss
 *.DS_Store
