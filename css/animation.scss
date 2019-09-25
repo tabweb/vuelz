@@ -289,6 +289,25 @@ $width-num-list: (
   }
 }
 
+// border-radius12
+$border-radius-num:80;
+$border-radius-list: (border-radius: 'border-radius',
+    border-top-left-radius:'border-top-left-radius',
+    border-top-right-radius:'border-top-right-radius',
+    border-bottom-left-radius:'border-bottom-left-radius',
+    border-bottom-right-radius:'border-bottom-right-radius',
+);
+
+@for $i from 0 through $border-radius-num {
+
+    @each $index,
+    $value in $border-radius-list {
+        .#{$value}#{$i} {
+            #{$value}: #{$i}px !important;
+        }
+    }
+}
+
 // eg 百分比 width1-2
 $width-percent-list: (
         pct2: 2,
