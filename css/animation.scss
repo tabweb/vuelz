@@ -230,6 +230,14 @@ $positive-list: (
   }
 }
 
+// padding0 padding-top0 -- 增加权重
+@each $index,
+$value in $positive-list {
+    .#{$value}0 {
+        #{$value}: 0 !important;
+    }
+}
+
 // eg top-1
 $position-list: (
         top: 'top',
