@@ -308,6 +308,14 @@ $border-radius-list: (border-radius: 'border-radius',
     }
 }
 
+// border-radius  添加最大圆角
+@each $index,
+$value in $border-radius-list {
+    .#{$value} {
+        #{$value}: 1000upx !important;
+    }
+}
+
 // eg 百分比 width1-2
 $width-percent-list: (
         pct2: 2,
