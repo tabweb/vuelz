@@ -193,6 +193,7 @@ $transform-scale: .2 !default;
 }
 
 // font-size ----
+.line-height{line-height: 1}
 $font-size: 1 !default;
 $font-size-num: 80;
 @for $i from 1 through $font-size-num {
