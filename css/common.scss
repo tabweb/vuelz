@@ -1,4 +1,37 @@
 @charset "UTF-8";
+
+/*
+
+page, view, scroll-view, swiper, movable-view, cover-view,
+icon, text, rich-text, progress,
+button, checkbox, form, input, label, picker, picker-view, radio, slider, switch, textarea,
+navigator, functional-page-navigator,
+audio, image, video, camera, live-player, live-pusher,
+map, canvas, open-data, web-view, ad, official-account {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+page{height:100%;width:100%;position:relative;overflow:hidden;background:#000;}
+canvas {touch-action-delay: none;touch-action: none;-ms-touch-action: none;}
+input,textarea{outline:0;border: none;background: none;}
+textarea::-webkit-input-placeholder,
+input::-webkit-input-placeholder {color: rgba(0,0,0,1);}
+image {border: none;white-space: normal;vertical-align: text-bottom;}
+
+page{background: #f2f2f2;  position: relative;min-height: 100%;}
+
+*/
+
 blockquote, fieldset,html, body, div, p, dl, dt, dd, form, h1, h2, h3, h4, h5, h6, ul, ol, li, pre, textarea, input, table th, td {
   padding: 0;
   margin: 0;
