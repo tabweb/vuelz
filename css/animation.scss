@@ -335,6 +335,28 @@ $width-percent-list: (
 
 @include width-pct;
 
+// gradients ****************
+$gradients-list:(yellow: (#fef643, #fee047), // 渐变色
+);
+@mixin gradients-bgcolor {
+    @each $index, $value in $gradients-list {
+        .bg-grad-#{$index} {
+            background-image: linear-gradient(to right, #{$value}) !important;
+        }
+        .bg-grad-bottom-#{$index} {
+            background-image: linear-gradient(#{$value}) !important;
+        }
+    }
+}
+@include gradients-bgcolor;
+
+// btn-color-yellow *************
+.btn-color-yellow {
+    color: rgba(46, 46, 46, 1);
+    background-color: rgba(255, 235, 0, 1);
+    box-shadow: 0px 5px 9px 0px rgba(255, 235, 0, .2);
+}
+
 // color -------
 $color-list: (
         pink: rgba(255, 192, 203, 1),
