@@ -93,6 +93,8 @@ button[disabled] {
 button, input[type=button], input[type=reset], input[type=submit] {
   -webkit-appearance: button;
   cursor: pointer; }
+.preserve-3d {
+    transform-style: preserve-3d;}
 
 img {
   border: none;
