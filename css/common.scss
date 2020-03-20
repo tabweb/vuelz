@@ -42,8 +42,8 @@ blockquote, fieldset,html, body, div, p, dl, dt, dd, form, h1, h2, h3, h4, h5, h
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: none;
 }
-i, cite, em, var, address, dfn{font-style: normal;}
-del,s, strike{text-decoration:none;}
+i,cite,em,var,address,dfn{font-style: normal;}
+del,s,strike{text-decoration:none;}
 html,body{height:100%;width:100%;position:relative;overflow:hidden;background:#000;}
 section{position:fixed;left:0;top:0;right:0;bottom:0;overflow:hidden;width:100%;height:100%;min-height:800px;}
 canvas {touch-action-delay: none;touch-action: none;-ms-touch-action: none;}
@@ -62,6 +62,7 @@ textarea::-webkit-input-placeholder,
 input::-webkit-input-placeholder {color: rgba(117,117,117,1);}
 input[type="radio"] {display: none;}
 button {cursor: pointer}
+.pointer {cursor: pointer;}
 button,select {text-transform: none}
 button[disabled] {-webkit-appearance: button;cursor: pointer}
 button,input[type=button],input[type=reset],input[type=submit] {-webkit-appearance: button;cursor: pointer}
@@ -80,13 +81,26 @@ img[class*="btn"]{pointer-events: all;}
 .cf:after{clear:both}
 .overflow{ overflow: hidden;}
 .overflow-x{overflow-x: hidden;}
+.overflow-y {overflow-y: hidden;}
 
 .dis-none{display:none}
 .dis-block{display: block;}
-.dis-inline-block{display: inline-block;}
+.inline{display: inline-block;}
 .dis-flex {display: flex;align-items: center;justify-content: center;}
+.dis-flex-v {display: flex;flex-direction: column;justify-content: space-between;}
+.items-center {align-items: center;}
+.items-bottom {align-items: flex-end;}
+// 左垂直居中对齐
+.dis-flex-left {display: flex !important;align-items: center;}
+// flexflex
+.flex {display: flex;
+  >.left,>.right {flex: none;}
+  >.content {flex: auto;}
+}
+.dis-flex-list {display: flex;flex-wrap: wrap;text-align: justify;justify-content: space-between;}
 .flex-column{flex-direction:column;}
-.flex-wrap{flex-wrap:wrap;}
+.flex-reverse {flex-direction: row-reverse;}
+.flex-wrap{flex-wrap:wrap;} // flex 自动换行
 .flex-wrap-center{width:47%;margin:1.5%;}
 .flex-left{flex-direction:row;}
 .justify-space{justify-content: space-around;}
@@ -152,6 +166,9 @@ img[class*="btn"]{pointer-events: all;}
 .btn:hover {opacity: .7;transition: opacity .4s}
 
 .text-center{text-align: center;}
+.text-right {text-align: right;}
+.line-height {line-height: 1;}
+.min-height {min-height: 100%;}
 .margin-auto{margin-right:auto;margin-left:auto}
 .v-align-middle {
   white-space: nowrap;
@@ -170,6 +187,8 @@ img[class*="btn"]{pointer-events: all;}
 .bg2{height: 200vh !important;width: 200vw !important;}
 .bg3{height: 300vh !important;width: 300vw !important;}
 .transformZ {transform: translateZ(1px);} // bug 解决浮动 遮盖
+.preserve-3d {transform-style: preserve-3d;}
+.backface-visibility {backface-visibility: hidden;} // 隐藏被旋转的 div 元素的背面
 .cursor-not-allowed {cursor: not-allowed!important}
 .unselectable {-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
 .z-index99{z-index: 99;}
@@ -466,4 +485,7 @@ span.l-7{-webkit-animation-delay:0s;animation-delay:0s}
 
 .text-underline {
   text-decoration: underline;
+}
+.box-shadow {
+  box-shadow: 1px 0 4px rgba(0, 21, 41, 0.08);
 }
