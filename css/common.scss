@@ -105,6 +105,8 @@ img[class*="btn"]{pointer-events: all;}
 .flex-left{flex-direction:row;}
 .justify-space{justify-content: space-around;}
 .justify{text-align: justify;justify-content: space-between;}
+// 允许长单词换行到下一行
+.break-word {word-wrap: break-word;word-break: break-all;}
 .ellipsis {
   display: inline-block;
   max-width: 100%;
