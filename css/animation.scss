@@ -757,6 +757,32 @@ $opacity-num: 10;
   }
 }
 
+// 单张动画帧 --------------------
+// https://gitee.com/weborg/mescroll-uni 京东下拉加载
+/*下拉刷新--进度条*/
+.mescroll-downwarp .downwarp-loading,
+.mescroll-downwarp .downwarp-preload {
+  width: 100rpx;
+  height: 140rpx;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: animManRun .3s steps(1, start) infinite;
+}
+
+/* 预加载,避免首次显示动画时,图片没及时加载完毕导致短暂的白屏 */
+.mescroll-downwarp .downwarp-preload {
+  animation: animManRun .1s steps(1, start);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes animManRun {
+  0% {background-image: url(http://www.mescroll.com/img/jingdong/mescroll-progress2.png)}
+  40% {background-image: url(http://www.mescroll.com/img/jingdong/mescroll-progress3.png)}
+  70% {background-image: url(http://www.mescroll.com/img/jingdong/mescroll-progress4.png)}
+  100% {background-image: url(http://www.mescroll.com/img/jingdong/mescroll-progress2.png)}
+}
+
 // main ---------
 .rotate-center-in {
   -webkit-animation: rotate-center-in 0.6s linear both;
